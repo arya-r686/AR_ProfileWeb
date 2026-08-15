@@ -1,0 +1,9 @@
+# Robots.txt for Arya Raut Portfolio
+User-agent: *
+Allow: /
+Disallow: /scratch/
+Disallow: /tmp/
+Disallow: /.git/
+
+# Sitemap Location
+Sitemap: https://aryaraut.dev/sitemap.xml

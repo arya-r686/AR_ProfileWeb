@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arya Raut — Computer Engineering | SE COMPS</title>
+  <meta name="description" content="Portfolio of Arya Raut, Computer Engineering Student (SE COMPS) at VCET Vasai, specializing in Software Engineering, Web Development, and WebGL architectures.">
+  
+  <!-- Security Headers -->
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface": "#101415",
+            "surface-dim": "#101415",
+            "surface-bright": "#363a3b",
+            "surface-container-lowest": "#0b0f10",
+            "surface-container-low": "#191c1e",
+            "surface-container": "#1d2022",
+            "surface-container-high": "#272a2c",
+            "surface-container-highest": "#323537",
+            "on-surface": "#e0e3e5",
+            "on-surface-variant": "#cbc3d7",
+            "outline": "#958ea0",
+            "outline-variant": "#494454",
+            "primary": "#d0bcff",
+            "on-primary": "#3c0091",
+            "primary-container": "#a078ff",
+            "on-primary-container": "#340080",
+            "inverse-primary": "#6d3bd7",
+            "secondary": "#c8c6c5",
+            "tertiary": "#c6c6c6",
+            "background": "#101415",
+            "on-background": "#e0e3e5",
+            "electric-violet": "#8b5cf6"
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          spacing: {
+            'margin-safe': '5vw',
+            'gutter': '32px',
+            'section-gap': '140px',
+            'stack-sm': '8px',
+            'stack-md': '24px',
+            'stack-lg': '48px',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom Styling & Effects */
+    body {
+      background-color: #101415;
+      color: #e0e3e5;
+      overflow-x: hidden;
+    }
+
+    /* Custom Cursor with GPU Hardware Acceleration */
+    .cursor-dot {
+      width: 8px;
+      height: 8px;
+      background-color: #8b5cf6;
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      top: 0;
+      left: 0;
+      will-change: transform;
+      transform: translate3d(-100px, -100px, 0);
+      transition: width 0.2s, height 0.2s, background-color 0.2s;
+    }
+
+    .cursor-outline {
+      width: 36px;
+      height: 36px;
+      border: 1px solid rgba(139, 92, 246, 0.5);
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 9998;
+      top: 0;
+      left: 0;
+      will-change: transform;
+      transform: translate3d(-100px, -100px, 0);
+      transition: width 0.25s, height 0.25s, border-color 0.25s, background-color 0.25s;
+    }
+
+    .cursor-hover .cursor-dot {
+      width: 12px;
+      height: 12px;
+      background-color: #d0bcff;
+    }
+
+    .cursor-hover .cursor-outline {
+      width: 64px;
+      height: 64px;
+      background-color: rgba(139, 92, 246, 0.15);
+      border-color: #8b5cf6;
+      backdrop-filter: blur(2px);
+    }
+
+    /* 3D Text Shadow */
+    .text-3d {
+      text-shadow: 
+        0px 1px 0px #1a1a1a,
+        0px 2px 0px #1a1a1a,
+        0px 3px 0px #1a1a1a,
+        0px 4px 0px #1a1a1a,
+        0px 6px 15px rgba(0, 0, 0, 0.8),
+        0px 10px 30px rgba(139, 92, 246, 0.35);
+    }
+
+    /* Typing Caret Animation */
+    .typing-container {
+      display: inline-block;
+      overflow: hidden;
+      white-space: nowrap;
+      border-right: 2px solid #8b5cf6;
+      animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+    }
+
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+
+    @keyframes blink-caret {
+      from, to { border-color: transparent }
+      50% { border-color: #8b5cf6; }
+    }
+
+    /* Bounce Animation */
+    .bounce {
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-16px); }
+      60% { transform: translateY(-8px); }
+    }
+
+    /* Glassmorphism Panels */
+    .glass-card {
+      background: rgba(18, 20, 21, 0.75);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .glass-card:hover {
+      box-shadow: 0 0 35px rgba(139, 92, 246, 0.25), inset 0 0 15px rgba(139, 92, 246, 0.1);
+      border-color: rgba(139, 92, 246, 0.4);
+    }
+
+    /* Glow Utilities */
+    .violet-glow {
+      box-shadow: 0 0 40px rgba(139, 92, 246, 0.3);
+    }
+
+    .violet-glow-intense {
+      box-shadow: 0 0 60px rgba(139, 92, 246, 0.5);
+    }
+
+    .text-glow {
+      text-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
+    }
+
+    /* 3D Tilt Card */
+    .preserve-3d {
+      transform-style: preserve-3d;
+    }
+
+    .perspective-1000 {
+      perspective: 1000px;
+    }
+
+    /* Timeline Styling */
+    .timeline-line {
+      background: linear-gradient(to bottom, transparent, #8b5cf6, transparent);
+      width: 2px;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: 0;
+      bottom: 0;
+      opacity: 0.6;
+      box-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
+    }
+
+    @media (max-width: 768px) {
+      .timeline-line {
+        left: 24px;
+        transform: none;
+      }
+    }
+
+    /* Carousel 3D Perspective */
+    .carousel-stage {
+      perspective: 1200px;
+      transform-style: preserve-3d;
+    }
+
+    .card-reflection {
+      -webkit-box-reflect: below 12px linear-gradient(transparent, transparent 70%, rgba(255,255,255,0.15));
+    }
+  </style>
+</head>
+<body class="selection:bg-primary-container selection:text-on-primary-container relative">
+
+  <!-- Custom Cursor -->
+  <div class="cursor-dot" id="cursor-dot"></div>
+  <div class="cursor-outline" id="cursor-outline"></div>
+
+  <!-- Sticky Top Navigation Bar -->
+  <nav id="navbar" class="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-xl border-b border-white/10 transition-all duration-300 px-margin-safe py-4 flex justify-between items-center">
+    <a href="#hero" class="cursor-interactive font-extrabold text-xl md:text-2xl tracking-tighter text-on-background hover:text-primary transition-colors flex items-center gap-2">
+      <span class="w-2.5 h-2.5 rounded-full bg-electric-violet animate-pulse"></span>
+      ARYA   RAUT
+    </a>
+
+    <!-- Desktop Nav Links -->
+    <div class="hidden md:flex items-center gap-8 font-mono text-xs tracking-wider uppercase">
+      <a href="#about" class="cursor-interactive group relative py-1 text-on-surface-variant hover:text-primary transition-colors">
+        <span>About</span>
+        <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-electric-violet group-hover:w-full transition-all duration-300 shadow-[0_0_12px_#8b5cf6]"></span>
+      </a>
+      <a href="#tech-stack" class="cursor-interactive group relative py-1 text-on-surface-variant hover:text-primary transition-colors">
+        <span>Tech Stack</span>
+        <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-electric-violet group-hover:w-full transition-all duration-300 shadow-[0_0_12px_#8b5cf6]"></span>
+      </a>
+      <a href="#skills" class="cursor-interactive group relative py-1 text-on-surface-variant hover:text-primary transition-colors">
+        <span>Skills</span>
+        <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-electric-violet group-hover:w-full transition-all duration-300 shadow-[0_0_12px_#8b5cf6]"></span>
+      </a>
+      <a href="#education" class="cursor-interactive group relative py-1 text-on-surface-variant hover:text-primary transition-colors">
+        <span>Education</span>
+        <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-electric-violet group-hover:w-full transition-all duration-300 shadow-[0_0_12px_#8b5cf6]"></span>
+      </a>
+      <a href="#certificates" class="cursor-interactive group relative py-1 text-on-surface-variant hover:text-primary transition-colors">
+        <span>Certificates</span>
+        <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-electric-violet group-hover:w-full transition-all duration-300 shadow-[0_0_12px_#8b5cf6]"></span>
+      </a>
+      <a href="#contact" class="cursor-interactive group relative py-1 text-on-surface-variant hover:text-primary transition-colors">
+        <span>Contact</span>
+        <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-electric-violet group-hover:w-full transition-all duration-300 shadow-[0_0_12px_#8b5cf6]"></span>
+      </a>
+    </div>
+
+    <!-- Mobile Menu Toggle -->
+    <button id="mobile-menu-toggle" class="md:hidden text-on-background cursor-interactive p-1">
+      <span class="material-symbols-outlined text-3xl">menu</span>
+    </button>
+  </nav>
+
+  <!-- Mobile Drawer Menu -->
+  <div id="mobile-menu" class="fixed inset-0 z-40 bg-background/95 backdrop-blur-2xl flex flex-col justify-center items-center gap-8 font-mono text-lg tracking-widest uppercase opacity-0 pointer-events-none transition-all duration-300">
+    <a href="#about" class="mobile-nav-link text-on-background hover:text-primary">About</a>
+    <a href="#tech-stack" class="mobile-nav-link text-on-background hover:text-primary">Tech Stack</a>
+    <a href="#skills" class="mobile-nav-link text-on-background hover:text-primary">Skills</a>
+    <a href="#education" class="mobile-nav-link text-on-background hover:text-primary">Education</a>
+    <a href="#certificates" class="mobile-nav-link text-on-background hover:text-primary">Certificates</a>
+    <a href="#contact" class="mobile-nav-link text-on-background hover:text-primary">Contact</a>
+  </div>
+
+  <!-- HERO SECTION -->
+  <section id="hero" class="relative min-h-screen flex flex-col justify-center items-center px-margin-safe pt-24 overflow-hidden">
+    <!-- Interactive 3D Canvas -->
+    <div class="absolute inset-0 z-0 opacity-85 mix-blend-screen pointer-events-none">
+      <canvas id="hero-canvas" class="w-full h-full block"></canvas>
+    </div>
+
+    <!-- Main Hero Content -->
+    <div class="relative z-10 text-center max-w-5xl mx-auto flex flex-col items-center">
+      <h1 class="font-black text-4xl sm:text-7xl md:text-8xl lg:text-[105px] leading-[0.95] tracking-tighter text-on-background text-3d mb-8 uppercase">
+        ARYA   RAUT
+      </h1>
+      <div class="font-mono text-sm sm:text-lg md:text-xl text-primary mb-10 h-8 flex items-center justify-center max-w-full overflow-hidden text-ellipsis px-2">
+        <span class="typing-container">Engineer / Computer Engineering</span>
+      </div>
+
+      <div class="flex flex-wrap gap-4 justify-center">
+        <a href="#about" class="cursor-interactive bg-electric-violet text-white font-mono text-xs uppercase tracking-widest px-8 py-4 rounded hover:bg-opacity-90 transition-all hover:scale-105 shadow-[0_0_30px_rgba(139,92,246,0.4)] min-h-[44px] flex items-center justify-center">
+          Explore Work
+        </a>
+        <a href="#contact" class="cursor-interactive glass-card text-on-background font-mono text-xs uppercase tracking-widest px-8 py-4 rounded hover:border-primary/40 transition-all min-h-[44px] flex items-center justify-center">
+          Get In Touch
+        </a>
+      </div>
+    </div>
+
+    <!-- Scroll Indicator -->
+    <a href="#about" class="absolute bottom-8 left-1/2 -translate-x-1/2 bounce flex flex-col items-center gap-1 cursor-interactive z-10 text-on-surface-variant hover:text-primary transition-colors">
+      <span class="font-mono text-[10px] tracking-widest uppercase">Scroll</span>
+      <span class="material-symbols-outlined text-2xl">expand_more</span>
+    </a>
+  </section>
+
+
+  <!-- ABOUT ME SECTION -->
+  <section id="about" class="relative py-16 sm:py-section-gap px-margin-safe max-w-[1600px] mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-center">
+      
+      <!-- Bio Text Column -->
+      <div class="lg:col-span-6 space-y-stack-md z-10">
+        <span class="font-mono text-xs text-primary tracking-widest uppercase block">
+          About ME
+        </span>
+        <h2 class="font-extrabold text-3xl sm:text-5xl md:text-6xl tracking-tighter leading-tight text-on-background">
+          ARYA RAUT <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-electric-violet"><BR>SE - COMPS</span>
+        </h2>
+        <div class="space-y-4 font-normal text-base sm:text-lg text-on-surface-variant border-t border-white/10 pt-6">
+          <p>
+            I am Arya Raut, currently pursuing my second year of Computer Engineering at Vidyavardhini’s College of Engineering and Technology. I am passionate about learning new technologies and continuously expanding my knowledge in areas such as web development, programming, and software development. 
+          </p>
+          <p>
+            I enjoy exploring new concepts, improving my coding skills, and working on projects that help me gain practical experience and grow as a computer engineering student.
+          </p>
+        </div>
+
+        <div class="pt-4">
+          <button id="btn-view-dossier" class="cursor-interactive group inline-flex items-center gap-3 text-primary font-mono text-xs tracking-widest uppercase hover:text-white transition-colors min-h-[44px]">
+            <span>View Technical Skills</span>
+            <span class="material-symbols-outlined text-sm group-hover:translate-x-1.5 transition-transform">arrow_forward</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Interactive 3D Tilt Portrait Card -->
+      <div class="lg:col-span-6 relative flex justify-center items-center perspective-1000 mt-12 lg:mt-0">
+        <div id="portrait-card" class="relative group w-full max-w-md preserve-3d cursor-crosshair transition-transform duration-300">
+          
+          <!-- Background Glow -->
+          <div class="absolute -inset-4 bg-electric-violet/20 blur-[50px] rounded-2xl group-hover:bg-electric-violet/35 transition-all duration-500"></div>
+
+          <!-- Card Canvas Surface -->
+          <div class="relative bg-surface border border-white/15 rounded-2xl overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.8)] preserve-3d">
+            <img 
+              src="/arya-portrait.jpeg" 
+              alt="Arya Raut Portrait"
+              fetchpriority="high"
+              decoding="async"
+              class="w-full h-[400px] sm:h-[520px] object-cover object-center transition-all duration-700 scale-105 group-hover:scale-100"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-80"></div>
+            
+            <div class="absolute bottom-6 left-6 right-6">
+              <h3 class="font-bold text-2xl text-on-background">Arya Raut</h3>
+            </div>
+          </div>
+
+          <!-- Floating Badge 1 -->
+          <div class="absolute top-3 left-3 sm:top-[12%] sm:-left-[8%] md:-left-[12%] z-30 glass-card px-4 sm:px-5 py-2 sm:py-2.5 rounded-full font-mono text-[11px] sm:text-xs text-primary shadow-2xl transform translate-z-[50px]">
+            SEM I : 9.02 SGPA
+          </div>
+
+          <!-- Floating Badge 2 -->
+          <div class="absolute bottom-3 right-3 sm:bottom-[18%] sm:-right-[6%] md:-right-[10%] z-30 glass-card px-4 sm:px-5 py-2 sm:py-2.5 rounded-full font-mono text-[11px] sm:text-xs text-primary shadow-2xl transform translate-z-[70px]">
+            SEM II : 9.13 SGPA
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- TECH STACK SECTION -->
+  <section id="tech-stack" class="relative py-section-gap px-margin-safe bg-surface-container-lowest border-y border-white/5 overflow-hidden">
+    <div class="max-w-[1600px] mx-auto relative z-10">
+      
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <span class="font-mono text-xs text-primary tracking-widest uppercase block mb-2">Constellation of Tools</span>
+        <h2 class="font-extrabold text-4xl sm:text-5xl md:text-6xl tracking-tighter text-on-background text-glow">
+          TECHNICAL ARSENAL
+        </h2>
+        <p class="font-normal text-base sm:text-lg text-on-surface-variant mt-4">
+          These are the core technologies and tools that I have used. Hover or drag to inspect.
+        </p>
+      </div>
+
+      <!-- Three.js 3D Solar System Canvas -->
+      <div class="relative w-full h-[620px] sm:h-[700px] rounded-2xl overflow-hidden glass-card">
+        <canvas id="tech-canvas" class="w-full h-full block cursor-grab active:cursor-grabbing"></canvas>
+        
+        <!-- Legend Overlay -->
+        <div class="absolute bottom-4 left-4 right-4 sm:right-auto font-mono text-[11px] text-on-surface-variant flex flex-wrap gap-3 bg-background/85 backdrop-blur-md px-4 py-3 rounded-xl border border-white/10 max-w-4xl">
+          <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-[#E34F26]"></span> HTML</span>
+          <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-[#1572B6]"></span> CSS</span>
+          <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-[#F7DF1E]"></span> JavaScript</span>
+          <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-[#ED8B00]"></span> JAVA</span>
+          <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-[#A8B9CC]"></span> C</span>
+          <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-[#00599C]"></span> C++</span>
+          <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-[#3776AB]"></span> PYTHON</span>
+          <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-[#61DAFB]"></span> REACT.js</span>
+          <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-[#47A248]"></span> MongoDB</span>
+          <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-[#3ECF8E]"></span> SupaBase</span>
+          <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-[#E0E3E5]"></span> Express.js</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- SKILLS SECTION -->
+  <section id="skills" class="relative py-section-gap px-margin-safe max-w-[1600px] mx-auto">
+    <div class="max-w-3xl mb-12">
+      <span class="font-mono text-xs text-primary tracking-widest uppercase block mb-2">Core Skills</span>
+      <h2 class="font-extrabold text-4xl sm:text-5xl md:text-6xl tracking-tighter text-on-background">
+        SKILL MATRIX.
+      </h2>
+      <p class="font-normal text-lg text-on-surface-variant mt-3">
+        The following are the skills I have developed and continue to improve through my academic learning, projects, and practical experience:
+      </p>
+    </div>
+
+    <!-- Bento Grid Layout -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6">
+      
+      <!-- Frontend Bento Panel -->
+      <div class="glass-card rounded-2xl p-8 lg:col-span-7 flex flex-col justify-between group">
+        <div>
+          <div class="flex justify-between items-center mb-6">
+            <h3 class="font-bold text-2xl text-on-background">Frontend Engineering</h3>
+            <span class="material-symbols-outlined text-primary text-3xl">code_blocks</span>
+          </div>
+          <p class="text-on-surface-variant text-sm mb-6">
+            Building responsive, ultra-fast user interfaces with complex state management and motion dynamics.
+          </p>
+        </div>
+        <div class="flex flex-wrap gap-3">
+          <span class="skill-tag cursor-interactive px-4 py-2 rounded-full font-mono text-xs text-on-background glass-card hover:text-primary">HTML</span>
+          <span class="skill-tag cursor-interactive px-4 py-2 rounded-full font-mono text-xs text-on-background glass-card hover:text-primary">CSS</span>
+          <span class="skill-tag cursor-interactive px-4 py-2 rounded-full font-mono text-xs text-on-background glass-card hover:text-primary">JavaScript</span>
+          <span class="skill-tag cursor-interactive px-4 py-2 rounded-full font-mono text-xs text-on-background glass-card hover:text-primary">React.js</span>
+          <span class="skill-tag cursor-interactive px-4 py-2 rounded-full font-mono text-xs text-on-background glass-card hover:text-primary">Tkinter</span>
+        </div>
+      </div>
+
+      <!-- Backend Bento Panel -->
+      <div class="glass-card rounded-2xl p-8 lg:col-span-5 flex flex-col justify-between group">
+        <div>
+          <div class="flex justify-between items-center mb-6">
+            <h3 class="font-bold text-2xl text-on-background">Backend Engineering</h3>
+            <span class="material-symbols-outlined text-primary text-3xl">dns</span>
+          </div>
+          <p class="text-on-surface-variant text-sm mb-6">
+            Designing the whole backend Infrastructure
+          </p>
+        </div>
+        <div class="flex flex-wrap gap-3">
+          <span class="skill-tag cursor-interactive px-4 py-2 rounded-full font-mono text-xs text-on-background glass-card hover:text-primary">Node.js</span>
+          <span class="skill-tag cursor-interactive px-4 py-2 rounded-full font-mono text-xs text-on-background glass-card hover:text-primary">JAVA</span>
+          <span class="skill-tag cursor-interactive px-4 py-2 rounded-full font-mono text-xs text-on-background glass-card hover:text-primary">PYTHON</span>
+          <span class="skill-tag cursor-interactive px-4 py-2 rounded-full font-mono text-xs text-on-background glass-card hover:text-primary">Express</span>
+        </div>
+      </div>
+
+      <!-- Design Bento Panel -->
+      <div class="glass-card rounded-2xl p-8 lg:col-span-5 flex flex-col justify-between group">
+        <div>
+          <div class="flex justify-between items-center mb-6">
+            <h3 class="font-bold text-2xl text-on-background">Design Systems</h3>
+            <span class="material-symbols-outlined text-primary text-3xl">brush</span>
+          </div>
+          <p class="text-on-surface-variant text-sm mb-6">
+            Crafting cohesive UI component libraries, dark mode palettes, and fluid typographic hierarchies.
+          </p>
+        </div>
+        <div class="flex flex-wrap gap-3">
+          <span class="skill-tag cursor-interactive px-4 py-2 rounded-full font-mono text-xs text-on-background glass-card hover:text-primary">Figma</span>
+          <span class="skill-tag cursor-interactive px-4 py-2 rounded-full font-mono text-xs text-on-background glass-card hover:text-primary">Stitch</span>
+          <span class="skill-tag cursor-interactive px-4 py-2 rounded-full font-mono text-xs text-on-background glass-card hover:text-primary">FramerMotion</span>
+        </div>
+      </div>
+
+      <!-- Infrastructure Bento Panel -->
+      <div class="glass-card rounded-2xl p-8 lg:col-span-7 flex flex-col justify-between group">
+        <div>
+          <div class="flex justify-between items-center mb-6">
+            <h3 class="font-bold text-2xl text-on-background">DataBase and Deployment</h3>
+            <span class="material-symbols-outlined text-primary text-3xl">cloud_sync</span>
+          </div>
+          <p class="text-on-surface-variant text-sm mb-6">
+            Working with databases and applications for Deployment
+          </p>
+        </div>
+        <div class="flex flex-wrap gap-3">
+          <span class="skill-tag cursor-interactive px-4 py-2 rounded-full font-mono text-xs text-on-background glass-card hover:text-primary">GitHub</span>
+          <span class="skill-tag cursor-interactive px-4 py-2 rounded-full font-mono text-xs text-on-background glass-card hover:text-primary">MongoDB</span>
+          <span class="skill-tag cursor-interactive px-4 py-2 rounded-full font-mono text-xs text-on-background glass-card hover:text-primary">SupaBase</span>
+          <span class="skill-tag cursor-interactive px-4 py-2 rounded-full font-mono text-xs text-on-background glass-card hover:text-primary">Vercel</span>
+          <span class="skill-tag cursor-interactive px-4 py-2 rounded-full font-mono text-xs text-on-background glass-card hover:text-primary">Netlify</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- EDUCATION SECTION -->
+  <section id="education" class="relative py-section-gap px-margin-safe bg-surface-container-lowest border-t border-white/5">
+    <div class="max-w-5xl mx-auto">
+      
+      <div class="text-center mb-16">
+        <span class="font-mono text-xs text-primary tracking-widest uppercase block mb-2">STUDIES AND GRADES</span>
+        <h2 class="font-extrabold text-4xl sm:text-5xl md:text-6xl tracking-tighter text-on-background text-glow">
+          Academic Background
+        </h2>
+        <p class="font-normal text-base sm:text-lg text-on-surface-variant max-w-2xl mx-auto mt-3">
+         This section highlights my educational background, academic journey, and the grades I have achieved throughout my studies.
+        </p>
+      </div>
+
+      <!-- Interactive Timeline -->
+      <div class="relative py-8">
+        <div class="timeline-line"></div>
+
+        <!-- Timeline Item 1 -->
+        <div class="relative flex flex-col md:flex-row items-center justify-between mb-16 group">
+          <div class="w-full md:w-1/2 pr-0 md:pr-12 md:text-right mb-6 md:mb-0">
+            <div class="glass-card p-8 rounded-xl js-tilt cursor-pointer">
+              <span class="inline-block font-mono text-xs text-primary border border-primary/30 px-3 py-1 rounded-full bg-primary/5 mb-3">2022-23</span>
+              <h3 class="font-bold text-2xl text-on-background">A.E.C.S.-1,TARAPUR</h3>
+              <h4 class="font-mono text-sm text-primary mb-3">CLASS X - CBSE</h4>
+              <p class="text-on-surface-variant text-sm">
+                GRADE : 91%
+              </p>
+            </div>
+          </div>
+          <!-- Node Dot -->
+          <div class="w-5 h-5 rounded-full bg-background border-2 border-electric-violet shadow-[0_0_15px_#8b5cf6] z-10 hidden md:block"></div>
+          <div class="w-full md:w-1/2 pl-0 md:pl-12"></div>
+        </div>
+
+        <!-- Timeline Item 2 -->
+        <div class="relative flex flex-col md:flex-row items-center justify-between mb-16 group">
+          <div class="w-full md:w-1/2 pr-0 md:pr-12"></div>
+          <!-- Node Dot -->
+          <div class="w-5 h-5 rounded-full bg-background border-2 border-electric-violet shadow-[0_0_15px_#8b5cf6] z-10 hidden md:block"></div>
+          <div class="w-full md:w-1/2 pl-0 md:pl-12 mt-6 md:mt-0">
+            <div class="glass-card p-8 rounded-xl js-tilt cursor-pointer">
+              <span class="inline-block font-mono text-xs text-primary border border-primary/30 px-3 py-1 rounded-full bg-primary/5 mb-3">2024-25</span>
+              <h3 class="font-bold text-2xl text-on-background">A.E.J.C.-1,TARAPUR</h3>
+              <h4 class="font-mono text-sm text-primary mb-3">CLASS XII - HSC</h4>
+              <p class="text-on-surface-variant text-sm">
+                GRADE : 86%
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Timeline Item 3 -->
+        <div class="relative flex flex-col md:flex-row items-center justify-between group">
+          <div class="w-full md:w-1/2 pr-0 md:pr-12 md:text-right mb-6 md:mb-0">
+            <div class="glass-card p-8 rounded-xl js-tilt cursor-pointer">
+              <span class="inline-block font-mono text-xs text-primary border border-primary/30 px-3 py-1 rounded-full bg-primary/5 mb-3">2025-29</span>
+              <h3 class="font-bold text-2xl text-on-background">VCET - VASAI</h3>
+              <h4 class="font-mono text-sm text-primary mb-3">BE : COMPUTER ENGINEERING</h4>
+              <p class="text-on-surface-variant text-sm">
+                FIRST YEAR :
+                  SEM 1 : 9.02 SGPA<br>
+                  SEM 2 : 9.13 SGPA
+              </p>
+            </div>
+          </div>
+          <!-- Node Dot -->
+          <div class="w-5 h-5 rounded-full bg-background border-2 border-electric-violet shadow-[0_0_15px_#8b5cf6] z-10 hidden md:block"></div>
+          <div class="w-full md:w-1/2 pl-0 md:pl-12"></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- CERTIFICATES SECTION -->
+  <section id="certificates" class="relative py-section-gap px-margin-safe max-w-[1600px] mx-auto overflow-hidden">
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <span class="font-mono text-xs text-primary tracking-widest uppercase block mb-2">Verified Credentials</span>
+      <h2 class="font-extrabold text-4xl sm:text-5xl md:text-6xl tracking-tighter text-on-background">
+        CERTIFIED EXCELLENCE
+      </h2>
+      <p class="font-normal text-base sm:text-lg text-on-surface-variant mt-3">
+        Click any credential card to launch the verification details modal.
+      </p>
+    </div>
+
+    <!-- 3D Coverflow Gallery Grid (2 Real Certificates) -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center max-w-4xl mx-auto">
+      
+      <!-- Card 1: Google AI -->
+      <div class="cert-card cursor-interactive glass-card rounded-2xl overflow-hidden border-2 border-primary/50 violet-glow transition-all duration-500 hover:scale-[1.03] card-reflection" data-cert="google">
+        <div class="h-64 sm:h-72 bg-surface-container-high relative overflow-hidden">
+          <img src="/certificates/google-ai-cert.png" alt="Google AI Professional Certificate" loading="lazy" decoding="async" class="w-full h-full object-cover object-top opacity-95 transition-transform duration-700 hover:scale-105">
+          <div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-60"></div>
+          <span class="absolute top-4 left-4 font-mono text-[10px] text-primary border border-primary bg-primary/20 px-3 py-1 rounded-full uppercase font-bold">AI & PROMPT ENGINEERING</span>
+        </div>
+        <div class="p-8">
+          <div class="flex justify-between items-start mb-2">
+            <h3 class="font-bold text-2xl text-on-background">Google AI</h3>
+            <span class="material-symbols-outlined text-primary text-xl">verified</span>
+          </div>
+          <p class="font-mono text-xs text-on-surface-variant mb-6">Google Career Certificates (7 Courses)</p>
+          <div class="flex justify-between items-center text-xs font-mono text-primary pt-3 border-t border-white/10">
+            <span>ISSUED: APR 16, 2026</span>
+            <span class="flex items-center gap-1">Inspect Credential <span class="material-symbols-outlined text-base">open_in_new</span></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2: Generative AI for Digital Marketing -->
+      <div class="cert-card cursor-interactive glass-card rounded-2xl overflow-hidden border-2 border-primary/50 violet-glow transition-all duration-500 hover:scale-[1.03] card-reflection" data-cert="ibm">
+        <div class="h-64 sm:h-72 bg-surface-container-high relative overflow-hidden">
+          <img src="/certificates/ibm-genai-cert.png" alt="Generative AI for Digital Marketing Specialization" loading="lazy" decoding="async" class="w-full h-full object-cover object-top opacity-95 transition-transform duration-700 hover:scale-105">
+          <div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-60"></div>
+          <span class="absolute top-4 left-4 font-mono text-[10px] text-primary border border-primary bg-primary/20 px-3 py-1 rounded-full uppercase font-bold">GEN AI & GEO OPTIMIZATION</span>
+        </div>
+        <div class="p-8">
+          <div class="flex justify-between items-start mb-2">
+            <h3 class="font-bold text-2xl text-on-background">Generative AI for Digital Marketing</h3>
+            <span class="material-symbols-outlined text-primary text-xl">verified</span>
+          </div>
+          <p class="font-mono text-xs text-on-surface-variant mb-6">IBM & SkillUp Specialization (4 Courses)</p>
+          <div class="flex justify-between items-center text-xs font-mono text-primary pt-3 border-t border-white/10">
+            <span>ISSUED: JUN 30, 2026</span>
+            <span class="flex items-center gap-1">Inspect Credential <span class="material-symbols-outlined text-base">open_in_new</span></span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CERTIFICATE VERIFICATION MODAL -->
+  <div id="cert-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center opacity-0 pointer-events-none transition-all duration-300 p-4">
+    <div class="glass-card border border-white/20 p-8 rounded-2xl max-w-3xl w-full relative violet-glow-intense transform scale-95 transition-all duration-300" id="cert-modal-box">
+      <button id="close-cert-modal" class="cursor-interactive absolute top-4 right-4 text-on-surface-variant hover:text-white transition-colors">
+        <span class="material-symbols-outlined text-3xl">close</span>
+      </button>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+        <div class="rounded-xl overflow-hidden border border-white/10 h-64 bg-surface-container">
+          <img id="modal-cert-img" src="" alt="Certificate" class="w-full h-full object-cover">
+        </div>
+        <div class="space-y-4">
+          <span id="modal-cert-badge" class="font-mono text-xs text-primary border border-primary/40 bg-primary/10 px-3 py-1 rounded-full inline-block">
+            CREDENTIAL VERIFIED
+          </span>
+          <h3 id="modal-cert-title" class="font-bold text-2xl text-on-background">Title</h3>
+          <p id="modal-cert-issuer" class="font-mono text-xs text-primary">Issuer</p>
+          <p id="modal-cert-desc" class="text-sm text-on-surface-variant">Description</p>
+          
+          <div class="pt-4 border-t border-white/10 flex flex-wrap items-center justify-between gap-3">
+            <span id="modal-cert-id" class="font-mono text-[11px] text-on-surface-variant">ID: CAMYGCFM5XV5</span>
+            <div class="flex gap-2">
+              <a id="btn-view-pdf" href="#" target="_blank" rel="noopener noreferrer" class="cursor-interactive px-3.5 py-2 bg-surface border border-primary/40 text-primary font-mono text-xs rounded hover:bg-primary/10 transition-all flex items-center gap-1.5">
+                <span class="material-symbols-outlined text-sm">picture_as_pdf</span> View PDF
+              </a>
+              <a id="btn-verify-badge" href="#" target="_blank" rel="noopener noreferrer" class="cursor-interactive px-4 py-2 bg-primary text-on-primary font-mono text-xs rounded hover:opacity-90 transition-opacity flex items-center gap-1 font-bold">
+                Verify Official <span class="material-symbols-outlined text-sm">open_in_new</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MSI LAPTOP SCROLLYTELLING SECTION -->
+  <section id="msi-scrollytelling" class="relative h-[400vh] bg-[#000000] text-white">
+    <!-- Sticky Canvas & Overlay Container -->
+    <div class="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center bg-[#000000]">
+      
+      <!-- Preloader State -->
+      <div id="msi-preloader" class="absolute inset-0 z-40 bg-[#000000] flex flex-col items-center justify-center transition-opacity duration-500">
+        <div class="relative flex items-center justify-center mb-6">
+          <div class="w-16 h-16 border-2 border-white/10 border-t-primary rounded-full animate-spin"></div>
+          <span class="material-symbols-outlined text-2xl text-primary absolute">laptop_mac</span>
+        </div>
+        <div class="font-mono text-xs uppercase tracking-widest text-white/70 mb-2">Loading Studio Sequence</div>
+        <div id="msi-loader-progress" class="font-mono text-2xl font-bold text-primary">0%</div>
+        <div class="w-48 h-1 bg-white/10 rounded-full mt-4 overflow-hidden">
+          <div id="msi-loader-bar" class="h-full bg-primary w-0 transition-all duration-200"></div>
+        </div>
+      </div>
+
+      <!-- HTML5 Render Canvas -->
+      <canvas id="msi-canvas" class="w-full h-full block object-contain pointer-events-none z-10"></canvas>
+
+      <!-- Background Ambient Glow -->
+      <div class="absolute inset-0 z-0 bg-radial from-primary/15 via-transparent to-transparent pointer-events-none"></div>
+
+      <!-- Story Overlays -->
+
+      <!-- 0% Scroll Overlay (Centered) -->
+      <div class="msi-story-overlay absolute z-20 max-w-2xl text-center px-6 transition-all duration-700 opacity-100 translate-y-0" data-min="0.00" data-max="0.22">
+        <span class="font-mono text-xs text-primary border border-primary/40 bg-primary/10 px-3.5 py-1.5 rounded-full uppercase tracking-widest block w-max mx-auto mb-4 backdrop-blur-md">
+          MY COMPANION
+        </span>
+        <h2 class="font-black text-4xl sm:text-6xl md:text-7xl tracking-tighter text-white uppercase leading-none mb-4">
+          MSI GF63 THIN GAMING
+        </h2>
+        <p class="font-mono text-sm sm:text-base text-white/60 uppercase tracking-widest">
+          Power, Refined.
+        </p>
+      </div>
+
+      <!-- 30% Scroll Overlay (Left Aligned) -->
+      <div class="msi-story-overlay absolute z-20 max-w-xl left-6 sm:left-16 md:left-24 text-left px-6 transition-all duration-700 opacity-0 translate-y-6 pointer-events-none" data-min="0.26" data-max="0.52">
+        <span class="font-mono text-xs text-primary border border-primary/40 bg-primary/10 px-3.5 py-1.5 rounded-full uppercase tracking-widest block w-max mb-4 backdrop-blur-md">
+          AERODYNAMIC PROFILE
+        </span>
+        <h3 class="font-black text-3xl sm:text-5xl md:text-6xl tracking-tighter text-white uppercase leading-tight mb-4">
+          Engineered for Speed.<br>
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-electric-violet">Built to Dominate.</span>
+        </h3>
+        <p class="font-normal text-base text-white/60">
+          Sleek brushed aluminum aesthetics paired with ultra-thin bezels for maximum immersion.
+        </p>
+      </div>
+
+      <!-- 60% Scroll Overlay (Right Aligned) -->
+      <div class="msi-story-overlay absolute z-20 max-w-xl right-6 sm:right-16 md:right-24 text-right px-6 transition-all duration-700 opacity-0 translate-y-6 pointer-events-none" data-min="0.56" data-max="0.82">
+        <span class="font-mono text-xs text-primary border border-primary/40 bg-primary/10 px-3.5 py-1.5 rounded-full uppercase tracking-widest block w-max ml-auto mb-4 backdrop-blur-md">
+          COOLING ARCHITECTURE
+        </span>
+        <h3 class="font-black text-3xl sm:text-5xl md:text-6xl tracking-tighter text-white uppercase leading-tight mb-4">
+          Precision Cooled.<br>
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-electric-violet">Relentlessly Fast.</span>
+        </h3>
+        <p class="font-normal text-base text-white/60">
+          Fine-tuned thermal dynamics keep performance peak and noise silent under full load.
+        </p>
+      </div>
+
+      <!-- 90% Scroll Overlay (Centered Hero Finish) -->
+      <div class="msi-story-overlay absolute z-20 max-w-4xl text-center px-6 transition-all duration-700 opacity-0 translate-y-6 pointer-events-none" data-min="0.86" data-max="1.00">
+        <a href="#contact" class="cursor-interactive group inline-flex items-center justify-center flex-wrap gap-3 font-black text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tighter text-white uppercase leading-none hover:scale-105 transition-transform text-glow">
+          <span>INITIATE</span>
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary via-electric-violet to-white">CONTACT</span>
+          <span class="material-symbols-outlined text-4xl sm:text-6xl md:text-7xl text-primary group-hover:translate-y-2 transition-transform">arrow_downward</span>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CONTACT & FOOTER SECTION (Creative Big Links) -->
+  <section id="contact" class="relative py-16 md:py-20 px-margin-safe bg-surface-container-lowest border-t border-white/10 overflow-hidden">
+    <!-- WebGL Background Canvas -->
+    <div class="absolute inset-0 z-0 opacity-40 mix-blend-screen pointer-events-none">
+      <canvas id="contact-shader-canvas" class="w-full h-full block"></canvas>
+    </div>
+
+    <div class="max-w-[1600px] mx-auto w-full relative z-10">
+      
+      <!-- Top Display Heading -->
+      <div class="mb-8 max-w-5xl">
+        <span class="font-mono text-xs text-primary tracking-widest uppercase block mb-2">Initiate Transmission</span>
+        <h2 class="font-black text-5xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tighter text-on-background uppercase leading-none">
+          LET'S <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary via-electric-violet to-on-background text-glow">CONNECT</span>
+        </h2>
+        <p class="font-normal text-base sm:text-lg text-on-surface-variant mt-3 max-w-2xl">
+          Have an idea or a question? Reach out to me anytime.
+        </p>
+      </div>
+
+      <!-- Hero Direct Email Link -->
+      <div class="mb-10 border-b border-white/10 pb-8">
+        <span class="font-mono text-xs text-on-surface-variant uppercase tracking-widest block mb-2">Direct Mail Transmission</span>
+        <a href="mailto:arpremium25@gmail.com" class="cursor-interactive group relative inline-block text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-on-background hover:text-primary transition-all duration-300">
+          <span class="relative z-10">arpremium25@gmail.com</span>
+          <!-- Animated Underline Gradient Sweep -->
+          <span class="absolute bottom-0 left-0 w-0 h-1 bg-gradient-to-r from-primary via-electric-violet to-on-background group-hover:w-full transition-all duration-500 ease-out"></span>
+        </a>
+      </div>
+
+      <!-- Big Social Links Grid (4-Column Desktop, 2-Column Mobile) -->
+      <div class="space-y-6">
+        <div>
+          <span class="font-mono text-xs text-primary uppercase tracking-widest block mb-3">Connect Across Platforms</span>
+          
+          <div class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-3 gap-4">
+            
+            <!-- GitHub Big Link -->
+            <a href="https://github.com/arya-r686" target="_blank" rel="noopener noreferrer" class="magnetic-btn cursor-interactive group glass-card p-5 rounded-2xl flex flex-col justify-between h-36 hover:border-primary/50 hover:shadow-[0_0_35px_rgba(139,92,246,0.25)] transition-all duration-300 hover:scale-[1.02]">
+              <div class="flex justify-between items-start">
+                <svg class="w-7 h-7 fill-current text-on-background group-hover:text-primary transition-colors" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                <span class="material-symbols-outlined text-xl text-primary group-hover:translate-x-1.5 group-hover:-translate-y-1.5 transition-transform duration-300">arrow_outward</span>
+              </div>
+              <div>
+                <h4 class="font-bold text-lg text-on-background group-hover:text-primary transition-colors">GitHub</h4>
+                <p class="font-mono text-xs text-on-surface-variant">@arya-r686</p>
+              </div>
+            </a>
+
+            <!-- LinkedIn Big Link -->
+            <a href="https://www.linkedin.com/in/aryaraut25" target="_blank" rel="noopener noreferrer" class="magnetic-btn cursor-interactive group glass-card p-5 rounded-2xl flex flex-col justify-between h-36 hover:border-primary/50 hover:shadow-[0_0_35px_rgba(139,92,246,0.25)] transition-all duration-300 hover:scale-[1.02]">
+              <div class="flex justify-between items-start">
+                <svg class="w-7 h-7 fill-current text-on-background group-hover:text-primary transition-colors" viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+                <span class="material-symbols-outlined text-xl text-primary group-hover:translate-x-1.5 group-hover:-translate-y-1.5 transition-transform duration-300">arrow_outward</span>
+              </div>
+              <div>
+                <h4 class="font-bold text-lg text-on-background group-hover:text-primary transition-colors">LinkedIn</h4>
+                <p class="font-mono text-xs text-on-surface-variant">in/aryaraut25</p>
+              </div>
+            </a>
+
+            <!-- Instagram Big Link -->
+            <a href="https://instagram.com/_raut_arya_" target="_blank" rel="noopener noreferrer" class="magnetic-btn cursor-interactive group glass-card p-5 rounded-2xl flex flex-col justify-between h-36 hover:border-primary/50 hover:shadow-[0_0_35px_rgba(139,92,246,0.25)] transition-all duration-300 hover:scale-[1.02]">
+              <div class="flex justify-between items-start">
+                <svg class="w-7 h-7 fill-current text-on-background group-hover:text-primary transition-colors" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                <span class="material-symbols-outlined text-xl text-primary group-hover:translate-x-1.5 group-hover:-translate-y-1.5 transition-transform duration-300">arrow_outward</span>
+              </div>
+              <div>
+                <h4 class="font-bold text-lg text-on-background group-hover:text-primary transition-colors">Instagram</h4>
+                <p class="font-mono text-xs text-on-surface-variant">@_raut_arya_</p>
+              </div>
+            </a>
+
+          </div>
+        </div>
+
+        <!-- Extras Row (Location & College) -->
+        <div class="glass-card p-5 rounded-2xl flex flex-col sm:flex-row justify-between items-center gap-4 font-mono text-xs text-on-surface-variant border border-white/10">
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary text-base">location_on</span>
+            <span>Boisar, Palghar, Maharashtra</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary text-base">school</span>
+            <span>VCET, VASAI</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Final Impression Footer -->
+      <footer class="mt-8 pt-6 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 font-mono text-xs text-on-surface-variant">
+        <div>
+          <span>© 2026 <strong class="font-bold text-on-background">Arya Raut</strong> — All Rights Reserved.</span>
+        </div>
+
+        <!-- Back to Top Button -->
+        <a href="#hero" class="cursor-interactive font-mono text-xs uppercase tracking-widest text-primary hover:text-white transition-colors flex items-center gap-2 group">
+          <span>Back to Top</span>
+          <span class="material-symbols-outlined text-base group-hover:-translate-y-1 transition-transform duration-300">arrow_upward</span>
+        </a>
+      </footer>
+
+    </div>
+  </section>
+
+
+  
+
+
+  <!-- Main App Script -->
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>
