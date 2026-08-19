@@ -2,7 +2,7 @@
 
 A cinematic, WebGL-powered personal portfolio site built with vanilla JavaScript, Three.js, and Tailwind CSS. Features an animated hero scene, an interactive tech-stack visualization, a canvas-based scroll-driven "MSI" image sequence, and a shader-driven contact section.
 
-**Live site:** araut.netlify.app
+**Live site:** https://araut.netlify.app
 
 ## Features
 
